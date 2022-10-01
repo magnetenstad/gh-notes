@@ -17,9 +17,9 @@
 	};
 </script>
 
-<div class="container">
+<div class="col">
+	<small>{data.path.length > 0 ? data.path : '/'}</small>
 	{#if data.dataItems}
-		<small>{data.path}/</small>
 		<br />
 		{#each data.dataItems as dataItem}
 			<div class="data-item" on:click={() => clickDataItem(dataItem)}>
@@ -29,24 +29,12 @@
 		{/each}
 	{/if}
 	{#if data.dataItem}
-		<small>
-			{data.path.substring(0, data.path.length - data.dataItem.name.length)}/
-		</small>
 		<h4>{data.dataItem.name}</h4>
 		<div class="content">{Base64.atob(data.dataItem.content ?? '')}</div>
 	{/if}
 </div>
 
 <style>
-	.container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-
-		margin: 2em;
-	}
-
 	.data-item {
 		display: flex;
 		flex-direction: row;

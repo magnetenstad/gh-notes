@@ -6,4 +6,13 @@
 	:global body {
 		font-family: 'Source Sans Pro', sans-serif;
 	}
+
+	:global .col {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		margin: 2em;
+	}
 </style>

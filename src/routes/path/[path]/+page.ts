@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { Octokit } from 'octokit';
+import { user } from '../../../stores/user';
 
 export interface DataItem {
 	type: 'file' | 'dir';
@@ -10,19 +11,18 @@ export interface DataItem {
 
 // TODO: Find typing
 export async function load({ params }: { params: { path: string } }) {
-	const auth = import.meta.env.VITE_GITHUB_TOKEN;
-	const repo = 'web-notes';
-	const owner = 'magnetenstad';
-	const path = params.path === 'root' ? '' : params.path.replaceAll('>', '/');
-	const octokit = new Octokit({ auth });
-
-	const getDirContent = async () => {
-		return await octokit.rest.repos.getContent({
-			owner,
-			repo,
-			path
-		});
+	const octoParams = {
+		owner: '',
+		repo: '',
+		path: params.path === 'root' ? '' : params.path.replaceAll('>', '/')
 	};
+
+	let octokit: Octokit;
+	user.auth.subscribe((auth) => (octokit = new Octokit({ auth })));
+	user.owner.subscribe((value) => (octoParams.owner = value));
+	user.repo.subscribe((value) => (octoParams.repo = value));
+
+	const getDirContent = () => octokit.rest.repos.getContent(octoParams);
 
 	const data = (await getDirContent()).data;
 
@@ -33,13 +33,13 @@ export async function load({ params }: { params: { path: string } }) {
 	if (Object.hasOwn(data, 'type')) {
 		// a file
 		return {
-			path,
+			path: octoParams.path,
 			dataItem: data as DataItem
 		};
 	} else {
 		// a directory
 		return {
-			path,
+			path: octoParams.path,
 			dataItems: data as DataItem[]
 		};
 	}
