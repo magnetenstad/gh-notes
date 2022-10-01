@@ -19,7 +19,7 @@ export async function load({ params }: { params: { path: string } }) {
 
 	let octokit: Octokit;
 	user.auth.subscribe((auth) => (octokit = new Octokit({ auth })));
-	user.owner.subscribe((value) => (octoParams.owner = value));
+	user.username.subscribe((value) => (octoParams.owner = value));
 	user.repo.subscribe((value) => (octoParams.repo = value));
 
 	const getDirContent = () => octokit.rest.repos.getContent(octoParams);

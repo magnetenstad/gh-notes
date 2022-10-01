@@ -42,7 +42,7 @@
 		align-items: center;
 
 		margin: 0.1em;
-		min-width: 200px;
+		min-width: 300px;
 
 		cursor: pointer;
 	}
