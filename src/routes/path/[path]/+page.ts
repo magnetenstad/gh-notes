@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { Octokit } from 'octokit';
-import { user } from '../../../stores/user';
+import { user } from '$stores/user';
 
 export interface DataItem {
 	type: 'file' | 'dir';

@@ -18,8 +18,11 @@ const config = {
 			precompress: false
 		}),
 		trailingSlash: 'always',
-		prerender: {
-			default: true
+		alias: {
+			$routes: './src/routes',
+			$lib: './src/lib',
+			$components: './src/lib/components',
+			$stores: './src/lib/stores'
 		}
 	}
 };

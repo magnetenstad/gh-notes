@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Octokit } from 'octokit';
-	import { user } from '../stores/user';
+	import { user } from '$stores/user';
 
 	let octokit: Octokit;
 	let form = {
